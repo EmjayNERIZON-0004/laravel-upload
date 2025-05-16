@@ -17,6 +17,9 @@ class UserAccountController extends Controller
 }
     public function create_new_user_form(){
         return redirect('new_user');
+    } 
+     public function create_new_user_form2(){
+        return redirect('new_user');
     }
     public function login_form(){
         return redirect('login');
