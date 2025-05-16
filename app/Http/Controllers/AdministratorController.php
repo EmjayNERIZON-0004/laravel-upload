@@ -17,11 +17,11 @@ class AdministratorController extends Controller
     }
     public function profile()
     {
-       return "this is profile section";
+       return "this is profile section thankyou";
        
     }
     public function contact()
-    {
+    { 
        return "this is contact section";
        
     }
