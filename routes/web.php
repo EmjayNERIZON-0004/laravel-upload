@@ -26,10 +26,7 @@ use Illuminate\Support\Facades\Route;
 //     Route::get('/contact', [AdministratorController::class,'contact']) ;
 //     Route::get('/profile', [AdministratorController::class,'profile']) ;   
 // });
-
-Route::get('/', function () {
-    return view('welcome');
-});
+ 
 
 Route::get('/', function () {
     return view('welcome');
@@ -92,6 +89,10 @@ Route::get('/userdashboard', [UserAccountController::class, 'dashboard'])->name(
 
 Route::get('/admin-dashboard', [UserAccountController::class, 'admin'])->name('admin.dashboard');
 });use App\Http\Controllers\UploadController;
+use App\Models\UserAccount;
 
 Route::post('/upload', [UploadController::class, 'store'])->name('upload.store');
 Route::get('/images', [UploadController::class, 'index'])->name('images.index');
+
+
+Route::post('/admin/users/{id}', [AdministratorController::class, 'toggleStatus'])->name('status');

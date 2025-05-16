@@ -21,8 +21,8 @@ class ManageEmployeeController extends Controller
     public function index()
     {
         $emp = DB::table('employees')
-        ->join('user_accounts', 'employees.id', '=', 'user_accounts.useraccount_id')
-        ->select('employees.*', 'user_accounts.*') // Select all fields from both tables
+        ->join('user_accounts', 'employees.employee_Id', '=', 'user_accounts.useraccount_id')
+        ->select('employees.*', 'user_accounts.status' , 'user_accounts.username' ) // Select all fields from both tables
         ->paginate(4);
 
 return view('EmployeeList')->with('employees', $emp);
@@ -69,12 +69,12 @@ return view('EmployeeList')->with('employees', $emp);
                     $validatedData['image_path'] = $imageName;
                 }
         
-                DB::beginTransaction(); // Start transaction
+                DB::beginTransaction(); // Start transaction    
         
                 $employee = Employee::create($validatedData);
         
                 UserAccount::create([
-                    'useraccount_id' => $employee->id,
+                    'useraccount_id' => $employee->employee_Id,
                     'username' => $employee->email ,
                     'password' => Hash::make($employee->employee_Id .$employee->fname),
                     'default_password' => $employee->employee_Id .$employee->fname ,
@@ -95,15 +95,22 @@ return view('EmployeeList')->with('employees', $emp);
 
     /**
      * Display the specified resource.e
-     */
+     */ 
     public function show($id)
-    {
-        $employees = Employee::findOrFail($id); // This will automatically return a 404 if not found
-    
-    
-        return view('viewEmployee', compact('employees'));
- 
-   }
+{
+
+       $employees = Employee::findOrFail($id); // This will automatically return a 404 if not found
+     
+    // Join the employees table with the user_accounts table
+    $employee = DB::table('employees')
+        ->join('user_accounts', 'employees.employee_Id', '=', 'user_accounts.useraccount_id')
+        ->select('employees.*', 'user_accounts.status', 'user_accounts.username') // Select all fields from employees and specific fields from user_accounts
+        ->where('employees.employee_Id', $employees->employee_Id) // Filter by the employee ID
+        ->first(); // Use first() to get a single record    // Check if the employee exists
+   
+    return view('viewEmployee', compact('employee')); // Pass the employee data to the view
+}
+
     
     
 
@@ -112,10 +119,9 @@ return view('EmployeeList')->with('employees', $emp);
      */
     public function edit($id)
     {
+          
         $employee = Employee::findOrFail($id);
-
-
-        return view('editEmployee', compact('employee'));
+         return view('editEmployee', compact('employee'));
     }
 
     /**

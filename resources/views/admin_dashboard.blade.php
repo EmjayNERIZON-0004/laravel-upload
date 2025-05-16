@@ -52,16 +52,37 @@
             <th>Username</th>
             <th>Default Password</th>
             <th>Created At</th>
+            <th>Status</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         @foreach($users as $index => $user)
             <tr>
-                <td>{{ $index + 1 }}</td>
+                <td>{{ $user->useraccount_id }}</td>
                 <td>{{ $user->username ?? '-' }}</td>
                 <td>{{ $user->default_password ?? '-' }}</td>
                 <td>{{ $user->created_at->format('Y-m-d') }}</td>
+        
+        <td>
+    @if($user->status == "active")
+        <span class="badge bg-success">Active</span>
+    @else
+        <span class="badge bg-secondary">Inactive</span>
+    @endif
+</td>
+<td>
+ <form action="{{ route('status', $user->id) }}" method="POST">
+    @csrf 
+    <button type="submit" class="btn btn-sm {{ $user->status === 'active' ? 'btn-danger' : 'btn-success' }}">
+        {{ $user->status === 'active' ? 'Deactivate' : 'Activate' }}
+    </button>
+</form>
+
+</td>
+
             </tr>
+            
         @endforeach
         </tbody>
     </table>

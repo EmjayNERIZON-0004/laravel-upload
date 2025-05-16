@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goodnight Letter for Daniela</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            background-color: #f5e8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        .container {
+            position: relative;
+            width: 400px;
+            height: 300px;
+            perspective: 1000px;
+        }
+        
+        .envelope {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #ff9ec0;
+            border-radius: 10px;
+            transform-style: preserve-3d;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 1.5s ease-in-out;
+        }
+        
+        .envelope.open {
+            transform: rotateX(180deg);
+        }
+        
+        .envelope-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background-color: #ff7eb6;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top;
+            transition: transform 0.5s ease-in-out;
+            z-index: 2;
+        }
+        
+        .envelope.opening .envelope-flap {
+            transform: rotateX(180deg);
+        }
+        
+        .envelope-body {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ff9ec0;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .heart {
+            color: #ff3366;
+            font-size: 30px;
+            margin: 0 5px;
+        }
+        
+        .envelope-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            transform: rotateX(180deg);
+            background-color: #f5e8ff;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .letter {
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .letter-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .letter-heading {
+            font-size: 20px;
+            color: #ff3366;
+            text-align: center;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        
+        .letter-body {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.5;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .letter-body p {
+            margin: 10px 0;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .letter-signature {
+            font-size: 18px;
+            color: #ff3366;
+            text-align: right;
+            margin-top: 15px;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .animated {
+            animation: fadeIn 0.8s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .sparkles {
+            position: absolute;
+            pointer-events: none;
+        }
+        
+        .sparkle {
+            position: absolute;
+            background-color: #ffcc00;
+            border-radius: 50%;
+            animation: sparkle 1.5s linear infinite;
+        }
+        
+        @keyframes sparkle {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+        
+        .click-me {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff3366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.1);
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="envelope">
+            <div class="envelope-front">
+                <div class="envelope-flap"></div>
+                <div class="envelope-body">
+                    For Daniela <span class="heart">♥</span>
+                </div>
+            </div>
+            <div class="envelope-back">
+                <div class="letter">
+                    <div class="letter-content">
+                        <div class="letter-heading">Goodnight, My Dear Daniela Jhane Romares</div>
+                        <div class="letter-body">
+                            <p>As the stars begin to twinkle in the night sky,</p>
+                            <p>I'm sending you this letter to say goodnight.</p>
+                            <p>Your smile brightens my world like nothing else.</p>
+                            <p>Sweet dreams, my love. I'll be thinking of you.</p>
+                            <p>Sleep tight, and know that you're on my mind.</p>
+                            <p>Until tomorrow, I'll keep you in my heart.</p>
+                        </div>
+                        <div class="letter-signature">With all my love</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="click-me">Click to open</div>
+    </div>
+
+    <div class="sparkles"></div>
+
+    <script>
+        const envelope = document.querySelector('.envelope');
+        const clickMe = document.querySelector('.click-me');
+        const letterHeading = document.querySelector('.letter-heading');
+        const letterParagraphs = document.querySelectorAll('.letter-body p');
+        const letterSignature = document.querySelector('.letter-signature');
+        
+        let isOpen = false;
+        
+        function toggleEnvelope() {
+            if (!isOpen) {
+                // First animate the flap opening
+                envelope.classList.add('opening');
+                
+                // Then open the entire envelope
+                setTimeout(() => {
+                    envelope.classList.add('open');
+                    clickMe.style.display = 'none';
+                    
+                    // Animate the letter content
+                    setTimeout(() => {
+                        animateLetterContent();
+                        createSparkles();
+                    }, 1000);
+                }, 500);
+                
+                isOpen = true;
+            }
+        }
+        
+        function animateLetterContent() {
+            letterHeading.classList.add('animated');
+            
+            // Animate paragraphs with delay
+            letterParagraphs.forEach((paragraph, index) => {
+                setTimeout(() => {
+                    paragraph.classList.add('animated');
+                }, 300 * (index + 1));
+            });
+            
+            // Animate signature at the end
+            setTimeout(() => {
+                letterSignature.classList.add('animated');
+            }, 300 * (letterParagraphs.length + 1));
+        }
+        
+        function createSparkles() {
+            const sparklesContainer = document.querySelector('.sparkles');
+            const letterRect = document.querySelector('.letter').getBoundingClientRect();
+            
+            for (let i = 0; i < 30; i++) {
+                createSparkle(sparklesContainer, letterRect);
+            }
+        }
+        
+        function createSparkle(container, bounds) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            
+            // Random position within the letter
+            const x = bounds.left + Math.random() * bounds.width;
+            const y = bounds.top + Math.random() * bounds.height;
+            
+            // Random size
+            const size = 2 + Math.random() * 5;
+            
+            // Random delay
+            const delay = Math.random() * 1.5;
+            
+            sparkle.style.left = `${x}px`;
+            sparkle.style.top = `${y}px`;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            sparkle.style.animationDelay = `${delay}s`;
+            
+            container.appendChild(sparkle);
+            
+            // Remove sparkle after animation
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1500 + delay * 1000);
+        }
+        
+        envelope.addEventListener('click', toggleEnvelope);
+        clickMe.addEventListener('click', toggleEnvelope);
+    </script>
+</body>
+</html>s
